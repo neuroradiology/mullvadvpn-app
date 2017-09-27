@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { If, Then } from 'react-if';
 import { Layout, Container, Header } from './Layout';
 import { BackendError } from '../lib/backend';
+import Map from './Map';
 
 import ExternalLinkSVG from '../assets/images/icon-extLink.svg';
 import ChevronRightSVG from '../assets/images/icon-chevron.svg';
@@ -132,7 +133,7 @@ export default class Connect extends Component {
     }
   }
 
-  renderMap(): React.Element<*> {
+  renderMap() {
     let [ isConnecting, isConnected, isDisconnected ] = [false, false, false];
     switch(this.props.connection.status) {
     case 'connecting': isConnecting = true; break;
@@ -140,20 +141,16 @@ export default class Connect extends Component {
     case 'disconnected': isDisconnected = true; break;
     }
 
-    // We decided to not include the map in the first beta release to customers
-    // but it MUST be included in the following releases. Therefore we choose
-    // to just comment it out
-    const map = undefined;
-    /*
     const altitude = (isConnecting ? 300 : 100) * 1000;
     const { location } = this.props.connection;
-    const map = <Map animate={ !this.state.isFirstPass }
-        location={ location || [0, 0] }
-        altitude= { altitude }
-        markerImagePath= { isConnected
-          ? './assets/images/location-marker-secure.svg'
-          : './assets/images/location-marker-unsecure.svg' } />
-    */
+    const map = (<Map animate={ !this.state.isFirstPass }
+      location={ location || [0, 0] }
+      altitude= { altitude }
+      markerImagePath= { isConnected
+        ? './assets/images/location-marker-secure.svg'
+        : './assets/images/location-marker-unsecure.svg' }
+    />);
+
 
     let ipComponent = undefined;
     if (isConnected || isDisconnected) {
