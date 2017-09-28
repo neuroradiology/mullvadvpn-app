@@ -31,15 +31,10 @@ export type ConnectProps = {
 export default class Connect extends Component {
   props: ConnectProps;
   state = {
-    isFirstPass: true,
     showCopyIPMessage: false
   };
 
   _copyTimer: ?number;
-
-  componentDidMount() {
-    this.setState({ isFirstPass: false });
-  }
 
   componentWillUnmount() {
     if(this._copyTimer) {
@@ -48,7 +43,6 @@ export default class Connect extends Component {
     }
 
     this.setState({
-      isFirstPass: true,
       showCopyIPMessage: false
     });
   }
@@ -143,13 +137,14 @@ export default class Connect extends Component {
 
     const zoom = (isConnecting ? 1 : 2);
     // const { location } = this.props.connection;
-    const map = (<Map animate={ !this.state.isFirstPass }
-      location={ isDisconnected ? [8.5417, 47.3769] : [-122.4194, 37.7749] } // location || [0, 0]
-      zoom= { zoom }
-      markerImagePath= { isConnected
-        ? './assets/images/location-marker-secure.svg'
-        : './assets/images/location-marker-unsecure.svg' }
-    />);
+    const map = (
+      <Map location={ isDisconnected ? [8.5417, 47.3769] : [-122.4194, 37.7749] } // location || [0, 0]
+        zoom= { zoom }
+        markerImagePath= { isConnected
+          ? './assets/images/location-marker-secure.svg'
+          : './assets/images/location-marker-unsecure.svg' }
+      />
+    );
 
 
     let ipComponent = undefined;
